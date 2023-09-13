@@ -1,1 +1,1 @@
-# create-screenshots-from-videos-and-upload-automatically
+# Automatic Screenshot Generator and Uploader
