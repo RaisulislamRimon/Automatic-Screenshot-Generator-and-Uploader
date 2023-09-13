@@ -23,9 +23,11 @@ Before using this tool, make sure you have the following configuration:
 - Go to this website: <a href="https://imgbb.com/">click here</a> and create an account.
 
 - Now go to here: <a href="https://api.imgbb.com/" target="_blank">click here</a> and create a new api key for your account.
+
   <a href="https://api.imgbb.com/">
   <img src="https://img001.prntscr.com/file/img001/a7a-06MlTNCgkcmEG0fE-w.png" alt="api image" />
   </a>
+
 - All configurations are now in your hand.
 
 ### <u>Usage</u>
