@@ -12,7 +12,13 @@
 
 - Automatically extracts screenshots from video files (maximum 10 screenshots now).
 - Uploads generated screenshots to a specified remote server or cloud storage (example: https://imgbb.com/).
-- Supports .mp4 video formats now.
+- Support All Video Format Files: 
+*.avi;
+*.mp4;
+*.mov;
+*.mkv;
+*.flv;
+*.wmv
 
 ### <u>Prerequisites</u>
 
