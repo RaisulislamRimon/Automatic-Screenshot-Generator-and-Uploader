@@ -1,5 +1,11 @@
 # Automatic Screenshot Generator and Uploader
 
+### original software is here: https://github.com/RaisulislamRimon/Automatic-Screenshot-Generator-and-Uploader-ss-generator-tool-Main-folder-.git
+
+
+
+### only software is here: https://github.com/RaisulislamRimon/Automatic-Screenshot-Generator-and-Uploader.git
+
 ### This tool automates the process of generating screenshots from videos and uploading them to a specified destination. It can be particularly useful for creating preview images for video content.
 
 ### <u>Features</u>
