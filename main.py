@@ -6,7 +6,6 @@ import os
 import random
 import shutil
 
-
 # Specify the path of the folder you want to delete
 folder_path = "frames"
 # Specify the path of the file you want to delete
@@ -17,8 +16,9 @@ if not os.path.exists(folder_path):
     os.makedirs(folder_path)
 
 # Create the file if it doesn't exist
-with open(file_path, 'w') as file:
+with open(file_path, "w") as file:
     pass
+
 
 # deleteing files & folder_path
 
@@ -32,12 +32,14 @@ def delete_files_folder():
 
 delete_files_folder()
 
+
 # Function to save the API key to a file
 
 
 def save_api_key(api_key):
     with open("api_key.txt", "w") as file:
         file.write(api_key)
+
 
 # Function to load the API key from the file
 
@@ -48,6 +50,7 @@ def load_api_key():
             return file.read().strip()
     else:
         return None
+
 
 # Function to handle setting/changing the API key
 
@@ -64,20 +67,24 @@ def set_api_key():
     else:
         tk.messagebox.showerror("Error", "API Key cannot be empty.")
 
+
 # Function to handle changing the API key
 
 
 def change_api_key():
     result = tk.messagebox.askyesno(
-        "Change API Key", "Are you sure you want to change the API Key?")
+        "Change API Key", "Are you sure you want to change the API Key?"
+    )
     if result:
         os.remove("api_key.txt")
         tk.messagebox.showinfo(
-            "Success", "API Key has been removed. Please set a new one.")
+            "Success", "API Key has been removed. Please set a new one."
+        )
         upload_button.configure(state="disabled")
         change_button.configure(state="disabled")
     else:
         return
+
 
 # Function to extract frames from a video with a maximum of 10 frames
 
@@ -86,22 +93,26 @@ def extract_frames(video_path, output_directory):
     os.makedirs(output_directory, exist_ok=True)
 
     cap = cv2.VideoCapture(video_path)
-    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    max_frames_to_capture = min(10, frame_count)  # Set maximum frames to 10
 
-    frames_to_capture = random.sample(
-        range(frame_count), max_frames_to_capture)
+    if not cap.isOpened():
+        tk.messagebox.showerror("Error", "Failed to open video file.")
+        return
+
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    max_frames_to_capture = min(5, frame_count)  # Set maximum frames to 5
+
+    frames_to_capture = random.sample(range(frame_count), max_frames_to_capture)
 
     for frame_num in frames_to_capture:
         cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num)
         ret, frame = cap.read()
 
         if ret:
-            frame_path = os.path.join(
-                output_directory, f"frame_{frame_num}.jpg")
+            frame_path = os.path.join(output_directory, f"frame_{frame_num}.jpg")
             cv2.imwrite(frame_path, frame)
 
     cap.release()
+
 
 # Function to upload images to ImgBB
 
@@ -110,11 +121,24 @@ def upload_images():
     api_key = load_api_key()
     if api_key is None:
         tk.messagebox.showerror(
-            "Error", "API Key not found. Please set the API Key first.")
+            "Error", "API Key not found. Please set the API Key first."
+        )
         return
 
+    # video_path = filedialog.askopenfilename(filetypes=[("Video Files", "*.mp4")])
+
     video_path = filedialog.askopenfilename(
-        filetypes=[("Video Files", "*.mp4")])
+        filetypes=[
+            ("All Video Files", "*.avi;*.mp4;*.mov;*.mkv;*.flv;*.wmv"),
+            ("MP4 Files", "*.mp4"),
+            ("AVI Files", "*.avi"),
+            ("MOV Files", "*.mov"),
+            ("MKV Files", "*.mkv"),
+            ("FLV Files", "*.flv"),
+            ("WMV Files", "*.wmv"),
+            ("All Files", "*.*")
+        ]
+    )
 
     if not video_path:
         return  # User cancelled or didn't select a file
@@ -131,7 +155,7 @@ def upload_images():
             response = requests.post(
                 "https://api.imgbb.com/1/upload",
                 params={"key": api_key},
-                files={"image": file}
+                files={"image": file},
             )
             result = response.json()
             # print(result)
@@ -159,18 +183,31 @@ api_key = load_api_key()
 if api_key:
     tk.Label(root, text="API Key already set.", font=font_style).pack(pady=10)
     upload_button = tk.Button(
-        root, text="Upload Images", command=upload_images, font=font_style)
+        root, text="Upload Images", command=upload_images, font=font_style
+    )
     change_button = tk.Button(
-        root, text="Change API Key", command=change_api_key, font=font_style)
+        root, text="Change API Key", command=change_api_key, font=font_style
+    )
 else:
     tk.Label(root, text="Enter API Key:", font=font_style).pack(pady=10)
     api_key_entry.pack(pady=10)
-    tk.Button(root, text="Set API Key", command=set_api_key,
-              font=font_style).pack(pady=10)
-    upload_button = tk.Button(root, text="Upload Images",
-                              command=upload_images, state="disabled", font=font_style)
-    change_button = tk.Button(root, text="Change API Key",
-                              command=change_api_key, state="disabled", font=font_style)
+    tk.Button(root, text="Set API Key", command=set_api_key, font=font_style).pack(
+        pady=10
+    )
+    upload_button = tk.Button(
+        root,
+        text="Upload Images",
+        command=upload_images,
+        state="disabled",
+        font=font_style,
+    )
+    change_button = tk.Button(
+        root,
+        text="Change API Key",
+        command=change_api_key,
+        state="disabled",
+        font=font_style,
+    )
 
 upload_button.pack(pady=20)
 change_button.pack(pady=5)
@@ -179,7 +216,6 @@ status_label = tk.Label(root, text="", font=font_style)
 status_label.pack()
 
 root.mainloop()
-
 
 # import tkinter as tk
 # from tkinter import filedialog, messagebox

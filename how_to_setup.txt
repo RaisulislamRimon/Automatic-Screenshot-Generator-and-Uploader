@@ -1,0 +1,8 @@
+# this command is for adding all package names to the requirements.txt file
+pip freeze > requirements.txt
+
+# this command is for installing all packages
+pip install -r requirements.txt
+
+# this command is for creating .exe file for windows os
+pyinstaller --onefile --windowed main.py
